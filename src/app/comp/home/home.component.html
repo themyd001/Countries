@@ -1,0 +1,87 @@
+<div
+  class="full"
+  [class.full_two]="visited_countries.length === 0"
+  [class.full_three]="!(visited_countries.length === 0)"
+  *ngIf="{ c: is_light$ | async } as is_light"
+>
+  <div *ngIf="!(visited_countries.length === 0)" class="visited">
+    <h4>Vistited:</h4>
+    <div>
+      <img *ngFor="let visited of visited_countries" [src]="visited" />
+    </div>
+  </div>
+  <div class="search_box">
+    <div
+      class="search_bar"
+      [class.secondary_white]="is_light.c"
+      [class.secondary_black]="!is_light.c"
+    >
+      <img
+        [src]="
+          is_light.c
+            ? './assets/images/black-search.svg'
+            : './assets/images/white-search.svg'
+        "
+      />
+      <input
+        [(ngModel)]="search"
+        #search_t="ngModel"
+        name="search"
+        type="text"
+        (keyup)="searchKeyUp(search_t.value)"
+      />
+    </div>
+    <mat-select
+      class="select_bar"
+      [class.secondary_white]="is_light.c"
+      [class.secondary_black]="!is_light.c"
+      [ngModel]="region_t"
+      name="region"
+      #region_m="ngModel"
+      (selectionChange)="regionChange(region_m.value)"
+    >
+      <mat-option *ngFor="let region of regions" [value]="region">
+        {{ region == "" ? "All Regions" : region }}
+      </mat-option>
+    </mat-select>
+  </div>
+  <ng-container *ngIf="countries$ | async as countries">
+    <div class="tiles_box" *ngIf="!(countries.length == 0)">
+      <div
+        *ngFor="let country of countries"
+        [class.secondary_white]="is_light.c"
+        [class.secondary_black]="!is_light.c"
+        [routerLink]="'/more/' + country.id"
+      >
+        <img [src]="country.flag" />
+        <div>
+          <h6>{{ country.name }}</h6>
+          <p><b>Population:</b> {{ country.population }}</p>
+          <p><b>Region:</b> {{ country.region }}</p>
+          <p><b>Capital:</b> {{ country.capital }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="message_box" *ngIf="countries.length == 0">
+      <img src="./../../../assets/images/loading.svg" />
+      <mat-spinner
+        color="warn"
+        diameter="60"
+        *ngIf="is_loading$ | async"
+      ></mat-spinner>
+      <h4 *ngIf="regions.length === 0">{{ is_error$ | async }}</h4>
+      <h4 *ngIf="!(regions.length === 0)">
+        No Country matches your search paramater
+      </h4>
+      <button
+        mat-button
+        [class.secondary_white]="is_light.c"
+        [class.secondary_black]="!is_light.c"
+        *ngIf="!(is_loading$ | async) && search == ''"
+        (click)="reloadPage()"
+      >
+        Reload
+      </button>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,81 @@
+<div class="full" *ngIf="{ c: is_light$ | async } as is_light">
+  <div class="back">
+    <button
+      mat-button
+      [class.secondary_white]="is_light.c"
+      [class.secondary_black]="!is_light.c"
+      routerLink="/"
+    >
+      <img
+        [src]="
+          is_light.c
+            ? './assets/images/left-arrow-black.svg'
+            : './assets/images/left-arrow-white.svg'
+        "
+      />
+      Back
+    </button>
+  </div>
+  <ng-container *ngIf="nowCountry$ | async as nowCountry">
+    <div class="mid" *ngIf="!(nowCountry.length === 0)">
+      <div class="more">
+        <div class="image_box">
+          <img [src]="nowCountry[0].flag" />
+        </div>
+        <div class="content_box">
+          <table>
+            <col width="50%" />
+            <col width="50%" />
+            <tr>
+              <td colspan="2">
+                <h4>{{ nowCountry[0].name }}</h4>
+              </td>
+            </tr>
+            <tr>
+              <td><b>Population:</b> {{ nowCountry[0].population }}</td>
+              <td><b>Top Level Domain:</b> {{ nowCountry[0].tld }}</td>
+            </tr>
+            <tr>
+              <td><b>Region:</b> {{ nowCountry[0].region }}</td>
+              <td><b>Currencies:</b> {{ nowCountry[0].currency }}</td>
+            </tr>
+            <tr>
+              <td><b>Capital:</b> {{ nowCountry[0].capital }}</td>
+              <td><b>Languages:</b> {{ nowCountry[0].languages }}</td>
+            </tr>
+          </table>
+          <div class="borders">
+            <button
+              mat-button
+              [class.secondary_white]="is_light.c"
+              [class.secondary_black]="!is_light.c"
+              *ngFor="let bor of nowCountry[0].borders"
+              [routerLink]="'/more/' + bor.id"
+            >
+              {{ bor.name }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="message_box" *ngIf="nowCountry.length == 0">
+      <img src="./../../../assets/images/loading.svg" />
+      <mat-spinner
+        color="warn"
+        diameter="60"
+        *ngIf="is_loading$ | async"
+      ></mat-spinner>
+      <h4 *ngIf="regions.length === 0">{{ is_error$ | async }}</h4>
+      <h4 *ngIf="!(regions.length === 0)">No Country Found</h4>
+      <button
+        mat-button
+        [class.secondary_white]="is_light.c"
+        [class.secondary_black]="!is_light.c"
+        *ngIf="!(is_loading$ | async) && regions.length === 0"
+        (click)="reloadPage()"
+      >
+        Reload
+      </button>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,114 @@
+@media screen and (max-width: 700px) {
+  .tiles_box {
+    gap: 16px !important;
+  }
+}
+
+.full_two {
+  grid-template-rows: 50px 1fr;
+}
+
+.full_three {
+  grid-template-rows: 30px 50px 1fr;
+}
+
+.full {
+  width: 100% !important;
+  height: 100%;
+  display: grid;
+  position: relative;
+  gap: 30px;
+  .visited {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    h4 {
+      padding: 0;
+      margin: 0;
+    }
+    div {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      img {
+        width: 20px !important;
+        height: 20px !important;
+        object-fit: cover;
+      }
+    }
+    div::-webkit-scrollbar {
+      display: none !important;
+    }
+  }
+
+  .search_box {
+    width: 100% !important;
+    height: 50px;
+    display: block;
+    overflow: hidden !important;
+
+    .search_bar {
+      width: 400px;
+      max-width: calc(100% - 200px) !important;
+      height: 50px;
+      padding: 16px;
+      display: grid;
+      float: left;
+      grid-template-columns: 30px 1fr;
+      img {
+        width: 20px;
+      }
+      input {
+        background: transparent;
+        border: none;
+        font-size: 17px;
+      }
+    }
+    .select_bar {
+      float: right;
+      width: 200px;
+    }
+  }
+
+  .message_box {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    img {
+      max-height: 50%;
+      max-width: 100%;
+    }
+  }
+
+  .tiles_box {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    overflow-y: auto;
+    gap: 50px;
+
+    div {
+      height: 400px;
+      img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      div {
+        padding: 16px 16px 40px;
+        h6 {
+          font-size: 19px;
+          margin-bottom: 16px;
+        }
+        p {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+}
+
+.tiles_box::-webkit-scrollbar {
+  display: none !important;
+}
