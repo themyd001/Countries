@@ -5,7 +5,7 @@ import * as appActions from '../actions/app.actions';
 import * as homeActions from '../actions/home.actions';
 import * as moreActions from '../actions/more.actions';
 export const initialState: AppModel = {
-  is_light: false,
+  is_light: true,
   visited_countries: [],
   region: '',
   search: '',
